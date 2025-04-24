@@ -1,18 +1,43 @@
-def decode_word(encoded_word, key):
-    extended_key = (key * ((len(encoded_word) // len(key)) + 1))[:len(encoded_word)]  
-    min_length = len(encoded_word)
-    decoded_word = [] 
-    for i in range(min_length):
-        e_char = encoded_word[i]
-        k_char = extended_key[i]
-        e_index = ord(e_char.lower()) - ord('a')
-        k_index = ord(k_char.lower()) - ord('a')
-        backward_distance = (k_index - e_index) % 26
-        new_index = (e_index + backward_distance) % 26
-        new_char = chr(new_index + ord('a'))
-        decoded_word.append(new_char)
-    return ''.join(decoded_word)
-encoded_input = input("Enter the encoded word: ")
-key_input = input("Enter the key word: ")
-decoded = decode_word(encoded_input, key_input)
-print(f"Decoded Word: {decoded}")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Word Decoder</title>
+</head>
+<body>
+  <h1>Decoder</h1>
+  <label for="encoded">Enter the encoded word:</label>
+  <input type="text" id="encoded" />
+  <br />
+  <label for="key">Enter the key word:</label>
+  <input type="text" id="key" />
+  <br />
+  <button onclick="decodeWord()">Decode</button>
+  <p id="result"></p>
+
+  <script>
+    function decodeWord() {
+      const encodedWord = document.getElementById("encoded").value.toLowerCase();
+      const key = document.getElementById("key").value.toLowerCase();
+      let extendedKey = key.repeat(Math.ceil(encodedWord.length / key.length)).slice(0, encodedWord.length);
+      let decodedWord = "";
+
+      for (let i = 0; i < encodedWord.length; i++) {
+        let eChar = encodedWord[i];
+        let kChar = extendedKey[i];
+
+        let eIndex = eChar.charCodeAt(0) - 'a'.charCodeAt(0);
+        let kIndex = kChar.charCodeAt(0) - 'a'.charCodeAt(0);
+
+        let backwardDistance = (kIndex - eIndex + 26) % 26;
+        let newIndex = (eIndex + backwardDistance) % 26;
+        let newChar = String.fromCharCode(newIndex + 'a'.charCodeAt(0));
+
+        decodedWord += newChar;
+      }
+
+      document.getElementById("result").innerText = `Decoded Word: ${decodedWord}`;
+    }
+  </script>
+</body>
+</html>
