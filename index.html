@@ -1,90 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>...</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>...</title>
+  <style>
+    body {
+      font-family: monospace;
+      background-color: #111;
+      color: #0f0;
+      padding: 2rem;
+    }
+    pre {
+      background: #222;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      white-space: pre-wrap;
+    }
+    input, button {
+      font-family: monospace;
+      font-size: 1rem;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+    }
+  </style>
 </head>
 <body>
-    <h1>...</h1>
-    <script>
-        const lis = ["oasis", "Oasis", "OASIS"];
-        let x = prompt("Enter Code:");
+  <h1>Enter Code:</h1>
+  <input type="text" id="codeInput" placeholder="Enter Code...">
+  <button onclick="checkCode()">Submit</button>
 
-        if (lis.includes(x)) {
-            alert("Correct! Here is your reward.");
-            document.body.innerHTML += `
-<pre>
+  <div id="output"></div>
+
+  <script>
+    const lis = ["oasis", "Oasis", "OASIS"];
+
+    function checkCode() {
+      const x = document.getElementById("codeInput").value;
+      const outputDiv = document.getElementById("output");
+
+      if (lis.includes(x)) {
+        outputDiv.innerHTML = `
+          <p>Correct! Here is your reward:</p>
+          <pre>
 CLzlkdoxqrixqflkpс vlr przzbppcriiv abzlaba qeb cfopq ibsbiа
 ARUibu xbt kvtu uif cfhjoojohс boe zpvԁwf qspwfo zpv ibwf xibu ju ublftν
 ERymj wjrfnsnsl yjcy mfxsԁy gjjs ijhwduyji gjhfzxj N ijxnlsji rd tbs hzxytr hnumjwν
 SRbmԁl ngebdx tgrmabgz lmtgwtkwс tgw lheobgz bm pbee kxjnbkx lhfx vexoxk mabgdbgzν
 ELtjpm izso nozk dn oj vivgtuz ocz xgpzn Dԁqz cdyyzi czmzу
 RRzllhkуυυvjanwνyggydwνugeυxadwυvυ1jkpMzlhPBDYnbR4Esхi7lxn3vNf9UjErυnawo
-</pre>
-`;
-
-            let y = prompt("Would you like to continue? Y/N:");
-
-            if (y === "Y") {
-                function caesarDecode(ciphertext, shift) {
-                    let decoded = '';
-
-                    for (let idx = 0; idx < ciphertext.length; idx++) {
-                        let char = ciphertext[idx];
-                        let decoded_char;
-
-                        if (('A' <= char && char <= 'Z') || ('a' <= char && char <= 'z')) {
-                            const base = char === char.toUpperCase() ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
-                            decoded_char = String.fromCharCode((char.charCodeAt(0) - base - shift + 26) % 26 + base);
-                        } else {
-                            decoded_char = char;
-                        }
-
-                        // Custom replacements
-                        if (char === 'υ') {
-                            decoded_char = '/';
-                        } else if (char === 'ν') {
-                            decoded_char = '.';
-                        } else if (char === 'х') {
-                            decoded_char = '-';
-                        } else if (char === 'у') {
-                            decoded_char = ':';
-                        } else if (char === 'ԁ') {
-                            decoded_char = "'";
-                        } else if (char === 'с') {
-                            decoded_char = ',';
-                        } else if (char === 'а') {
-                            decoded_char = '!';
-                        }
-
-                        decoded += decoded_char;
-                    }
-
-                    return decoded;
-                }
-
-                for (let i = 0; i < 6; i++) {
-                    let ciphertext = prompt(": ");
-                    let shift;
-                    while (true) {
-                        shift = parseInt(prompt("Enter the shift value:"));
-                        if (!isNaN(shift)) {
-                            break;
-                        } else {
-                            alert("ERROR! Please enter a valid integer for the shift value.");
-                        }
-                    }
-
-                    let decodedText = caesarDecode(ciphertext, shift);
-                    alert("Decoded text: " + decodedText);
-                }
-            } else {
-                alert("TRY LATER");
-            }
-        } else {
-            alert("INCORRECT");
-        }
-    </script>
+          </pre>
+        `;
+      } else {
+        outputDiv.innerHTML = `<p style="color: red;">INCORRECT</p>`;
+      }
+    }
+  </script>
 </body>
 </html>
