@@ -1,43 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Word Decoder</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caesar Cipher Decoder</title>
 </head>
 <body>
-  <h1>Decoder</h1>
-  <label for="encoded">Enter the encoded word:</label>
-  <input type="text" id="encoded" />
-  <br />
-  <label for="key">Enter the key word:</label>
-  <input type="text" id="key" />
-  <br />
-  <button onclick="decodeWord()">Decode</button>
-  <p id="result"></p>
+    <h1>Welcome to the Caesar Cipher Decoder!</h1>
+    <script>
+        const lis = ["oasis", "Oasis", "OASIS"];
+        let x = prompt("Enter Code:");
 
-  <script>
-    function decodeWord() {
-      const encodedWord = document.getElementById("encoded").value.toLowerCase();
-      const key = document.getElementById("key").value.toLowerCase();
-      let extendedKey = key.repeat(Math.ceil(encodedWord.length / key.length)).slice(0, encodedWord.length);
-      let decodedWord = "";
+        if (lis.includes(x)) {
+            alert("Correct! Here is your reward.");
+            console.log(`
+            CLzlkdoxqrixqflkpс vlr przzbppcriiv abzlaba qeb cfopq ibsbiа
+            ARUibu xbt kvtu uif cfhjoojohс boe zpvԁwf qspwfo zpv ibwf xibu ju ublftν
+            ERymj wjrfnsnsl yjcy mfxsԁy gjjs ijhwduyji gjhfzxj N ijxnlsji rd tbs hzxytr hnumjwν
+            SRbmԁl ngebdx tgrmabgz lmtgwtkwс tgw lheobgz bm pbee kxjnbkx lhfx vexoxk mabgdbgzν
+            ELtjpm izso nozk dn oj vivgtuz ocz xgpzn Dԁqz cdyyzi czmzу
+            RRzllhkуυυvjanwνyggydwνugeυxadwυvυ1jkpMzlhPBDYnbR4Esхi7lxn3vNf9UjErυnawo
+            `);
 
-      for (let i = 0; i < encodedWord.length; i++) {
-        let eChar = encodedWord[i];
-        let kChar = extendedKey[i];
+            let y = prompt("Would you like to continue? Y/N:");
 
-        let eIndex = eChar.charCodeAt(0) - 'a'.charCodeAt(0);
-        let kIndex = kChar.charCodeAt(0) - 'a'.charCodeAt(0);
+            if (y === "Y") {
+                function caesarDecode(ciphertext, shift) {
+                    let decoded = '';
 
-        let backwardDistance = (kIndex - eIndex + 26) % 26;
-        let newIndex = (eIndex + backwardDistance) % 26;
-        let newChar = String.fromCharCode(newIndex + 'a'.charCodeAt(0));
+                    for (let idx = 0; idx < ciphertext.length; idx++) {
+                        let char = ciphertext[idx];
+                        let decoded_char;
 
-        decodedWord += newChar;
-      }
+                        if (('A' <= char && char <= 'Z') || ('a' <= char && char <= 'z')) {
+                            const base = char === char.toUpperCase() ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
+                            decoded_char = String.fromCharCode((char.charCodeAt(0) - base - shift + 26) % 26 + base);
+                        } else {
+                            decoded_char = char;
+                        }
 
-      document.getElementById("result").innerText = `Decoded Word: ${decodedWord}`;
-    }
-  </script>
+                        // Custom replacements
+                        if (char === 'υ') {
+                            decoded_char = '/';
+                        } else if (char === 'ν') {
+                            decoded_char = '.';
+                        } else if (char === 'х') {
+                            decoded_char = '-';
+                        } else if (char === 'у') {
+                            decoded_char = ':';
+                        } else if (char === 'ԁ') {
+                            decoded_char = "'";
+                        } else if (char === 'с') {
+                            decoded_char = ',';
+                        } else if (char === 'а') {
+                            decoded_char = '!';
+                        }
+
+                        decoded += decoded_char;
+                    }
+
+                    return decoded;
+                }
+
+                for (let i = 0; i < 6; i++) {
+                    let ciphertext = prompt(": ");
+                    let shift;
+                    while (true) {
+                        shift = parseInt(prompt("Enter the shift value:"));
+                        if (!isNaN(shift)) {
+                            break;
+                        } else {
+                            alert("ERROR! Please enter a valid integer for the shift value.");
+                        }
+                    }
+
+                    let decodedText = caesarDecode(ciphertext, shift);
+                    alert("Decoded text: " + decodedText);
+                }
+            } else {
+                alert("TRY LATER");
+            }
+        } else {
+            alert("INCORRECT");
+        }
+    </script>
 </body>
 </html>
